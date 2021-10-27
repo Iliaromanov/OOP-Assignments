@@ -1,6 +1,7 @@
 #include "rational.h"
 #include <iostream>
 
+
 // helper gcd func
 int gcd(int n, int m) {
     int tmp;
@@ -20,6 +21,14 @@ void Rational::simplify() {
 
     this->num /= g;
     this->den /= g;
+
+    if (num < 0 && den < 0) { // -a/-b => a/b
+        this->num *= -1;
+        this->den *= -1;
+    } else if (this->den < 0) { // a/-b => -a/b
+        this->num *= -1;
+        this->den *= -1;
+    }
 }
 
 Rational::Rational(int num, int den) {
@@ -81,7 +90,14 @@ std::istream &operator>>(std::istream &in, Rational &rat) {
 
     rat.num = numerator;
     rat.den = denomenator;
-    //rat.simplify(); /// <--------------------------------------------------------------not sure if should do this????????????
+    rat.simplify();
 
     return in;
 }
+
+// int main() {
+//     Rational r{14, -21};
+//     std::cout << r << std::endl;
+
+    
+// }
