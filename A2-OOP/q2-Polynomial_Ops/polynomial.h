@@ -1,6 +1,7 @@
 #ifndef POLY_H
 #define POLY_H
 #include <iostream>
+#include <utility>
 #include "rational.h"
 
 struct Polynomial {
@@ -29,6 +30,12 @@ struct Polynomial {
 
     // degree of the zero polynomial is -1
     int degree() const;
+
+    private:
+        void swap( Polynomial &other ) {
+            std::swap( coeffs, other.coeffs );
+            std::swap( capacity, other.capacity );
+        }
 };
 
 // Print with decresing exponents.
