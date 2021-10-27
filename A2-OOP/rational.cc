@@ -22,10 +22,7 @@ void Rational::simplify() {
     this->num /= g;
     this->den /= g;
 
-    if (num < 0 && den < 0) { // -a/-b => a/b
-        this->num *= -1;
-        this->den *= -1;
-    } else if (this->den < 0) { // a/-b => -a/b
+    if (this->den < 0 && this->num >= 0) { // a/-b => -a/b
         this->num *= -1;
         this->den *= -1;
     }
@@ -39,26 +36,37 @@ Rational::Rational(int num, int den) {
 
 
 Rational Rational::operator+(const Rational &rhs) const {
-
+    Rational result{this->num*rhs.den + this->den*rhs.num, this->den*rhs.den};
+    return result;
 }
 Rational Rational::operator-(const Rational &rhs) const {
-    
+    Rational result{this->num*rhs.den - this->den*rhs.num, this->den*rhs.den};
+    return result;
 }
 Rational Rational::operator*(const Rational &rhs) const {
-
+    Rational result{this->num*rhs.num, this->den*rhs.den};
+    return result;
 }
 Rational Rational::operator/(const Rational &rhs) const {
-
+    Rational result{this->num*rhs.den, this->den*rhs.num};
+    return result;
 }
 
 Rational &Rational::operator+=(const Rational &rhs) {
+    Rational result{this->num*rhs.den + this->den*rhs.num, this->den*rhs.den};
+    *this = result;
 
+    return *this;
 }
 Rational &Rational::operator-=(const Rational &rhs) {
+    Rational result{this->num*rhs.den - this->den*rhs.num, this->den*rhs.den};
+    *this = result;
 
+    return *this;
 }
 Rational Rational::operator-() const {
-
+    Rational result{this->num*-1, this->den};
+    return result;
 }
 
 int Rational::getNumerator() const {
@@ -71,9 +79,9 @@ int Rational::getDenominator() const {
 
 std::ostream &operator<<(std::ostream &out, const Rational &rat) {
     if (rat.den == 1) {
-        out << rat.num << std::endl;
+        out << rat.num;
     } else {
-        out << rat.num << "/" << rat.den << std::endl;
+        out << rat.num << "/" << rat.den;
     }
     return out;
 }
@@ -94,10 +102,3 @@ std::istream &operator>>(std::istream &in, Rational &rat) {
 
     return in;
 }
-
-// int main() {
-//     Rational r{14, -21};
-//     std::cout << r << std::endl;
-
-    
-// }
