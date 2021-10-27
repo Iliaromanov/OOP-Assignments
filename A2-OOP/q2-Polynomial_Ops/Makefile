@@ -5,4 +5,4 @@ polynomial.o: polynomial.cc polynomial.h rational.h
 	g++ -std=c++14 -c polynomial.cc
 
 a3q2.o: a3q2.cc polynomial.h rational.h
-	g++ -std:c++14 -c a3q2.cc
+	g++ -std=c++14 -c a3q2.cc
