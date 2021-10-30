@@ -24,8 +24,8 @@ class TString {
 
     // Insert the string denoted by the std::string into this TString at the
     // location immediately at index.
-    // Requires index < size of string represented by our TString.
-    void insert(const std::string &, const int index);
+    // Requires index <= size of string represented by our TString.
+    void insert(const std::string &s, const int index);
 
     // Iterator - You may not modify the contents of this structure at all!
     class TStringIter {
@@ -52,9 +52,15 @@ class TString {
         TNode *parent;
         // You may add any additional TNode methods below here for your own use
         // You should NOT add any additional fields.
-        TNode(std::string data, TNode *left, TNode *right, TNode *parent);
+        TNode(std::string data, int size, TNode *left, TNode *right, TNode *parent);
         TNode(const TNode &other, TNode *parent = nullptr);
         ~TNode();
+        // Inserts node at i
+        void NodeInsert(const std::string &s, const int i);
+        // Finds first parent that has the current node in its left sub-tree
+        TNode *firstLeftParent();
+        // increases all parents size values by amount
+        void updateSizes(int left_size); 
 
         // End TNode, changes from the above comment must stop here.
     };
@@ -66,5 +72,7 @@ class TString {
     // Print the string represented by our TString.
     friend std::ostream& operator<<(std::ostream &, const TString &);
     // You may add any fields/methods below here for your own use.
+    // Print TNode
+    friend std::ostream& operator<<(std::ostream &, const TString::TNode &);
 };
 #endif
