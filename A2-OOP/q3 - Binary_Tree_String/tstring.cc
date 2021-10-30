@@ -26,57 +26,92 @@ TString::TNode::~TNode() { // TNode destructor
     delete right;
 }
 
-std::ostream& operator<<(std::ostream& out, const TString::TNode &node) { //---------------------------------------- PRINT BROOOOOOOOKKEEEEEEEEENNNNNNNN
-    if (!node.left) { // if left = nullptr
+std::ostream& operator<<(std::ostream& out, const TString::TNode &node) {
+    if (!node.left) {
         out << node.data;
     } else {
-        if (node.left) out << *node.left;
+        out << *node.left;
+        out << node.data;
     }
     if (node.right) out << *node.right;
-    out << node.data;
 
     return out;
 }
 
-void TString::TNode::updateSizes(int amount, bool from_right) {
-    cout << data << "| " << "cur size: " << size << endl;
-    cout << " amount: " << amount << endl;
-    if (from_right) {
-        size = data.length() + amount; // -----------------------------FROM RIGHT WRONG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    } else {
-        size += amount;
-    }
-    cout << "new size: " << size << endl;
+void TString::TNode::updateSizes(int amount) {
+    size += amount;
     if (parent) {
-        parent->updateSizes(amount, false); // the rest would be frm left
+        if (parent->left == this) {
+            parent->updateSizes(amount);
+        } else {
+            TNode *firstLeftPar = this->firstLeftParent();
+                if (firstLeftPar) firstLeftPar->updateSizes(amount);
+        }
     }
 }
 
+TString::TNode *TString::TNode::firstLeftParent() {
+    if (!parent) return nullptr;
+    if (parent->left == this) return parent;
+    return parent->firstLeftParent();
+}
+
 void TString::TNode::NodeInsert(const std::string &s, const int i) {
+
+    // cout << "this: '" << data << "' size: " << size << " | inserting: '" << s << "' at: " << i << endl;
+
+
     if (size - data.length() > i) {
         left->NodeInsert(s, i); // insert into left subtree
-    } else if (size <= i) {
-        right->NodeInsert(s, i - size); // insert into right subtree
     } else if (size - data.length() == i) {
         if (left) {
-            left->NodeInsert(s, left->size - 1); // insert at end of left child
+            left->NodeInsert(s, i); // insert at end of left child
         } else {
-            cout << "updating parents of: " << s << endl;
-            this->updateSizes(s.length(), false); // increase size of all parents by s.length()
-            cout << "~~~~~~~~" << endl;
+
+            // cout << "updating parents of: " << s << endl;
+
+            this->updateSizes(s.length()); // increase size of all parents by s.length()
+
+            // cout << "~~~~~~~~" << endl;
+
             left = new TNode{s, s.length(), nullptr, nullptr, this}; // insert as the left child
         }
-    } else if (size - 1 == i) {
+    } else if (size <= i) {
         if (right) {
-            right->NodeInsert(s, right->size - right->data.length()); // insert at start of right child
+            right->NodeInsert(s, i - size); // insert into right subtree
         } else {
-            if (parent) {
-                cout << "updating parents of: " << s << endl;
-                parent->updateSizes(s.length() + data.length(), true); // increse size of parent's parents
+            TNode *firstLeftPar = this->firstLeftParent();
+            if (firstLeftPar) {
+
+                // cout << "updating parents of: " << s << endl;
+
+                // increse size of first parent that has this node in its left subtree, 
+                //  and increase size of that nodes parents
+                firstLeftPar->updateSizes(s.length());
             }
-            cout << "~~~~~~~~" << endl;
+
+            // cout << "~~~~~~~~" << endl;
+
             right = new TNode{s, s.length(), nullptr, nullptr, this}; // insert as the right child
         }
+    } else { // size - data.length() < i < size; need to split
+        TNode *old_left = left;
+        TNode *old_right = right;
+        string new_left_s = data.substr(0, i-(size-data.length()));
+        string new_right_s = data.substr(i-(size-data.length()), data.length());
+        left = new TNode{new_left_s, i, old_left, nullptr, this};;
+        right = new TNode{new_right_s, size-i, nullptr, old_right, this};
+        data = s;
+        size = i + s.length();
+        if (parent) { // update parent sizes accordingly
+            if (parent->left == this) { // curent node is a left child
+                parent->updateSizes(s.length());
+            } else { // current node is a right child
+                TNode *firstLeftPar = this->firstLeftParent();
+                if (firstLeftPar) firstLeftPar->updateSizes(s.length());
+            }
+        }
+
     }
 }
 
