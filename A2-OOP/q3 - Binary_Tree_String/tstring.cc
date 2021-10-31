@@ -230,7 +230,7 @@ TString::TStringIter &TString::TStringIter::operator++() {
 }
 
 bool TString::TStringIter::operator!=(const TString::TStringIter &other) {
-    return !(this == &other && ind == other.ind && this->p == other.p);
+    return !(ind == other.ind && this->p == other.p);
 }
 
 TString::TStringIter::TStringIter(TString::TNode *p, int ind) : p{p}, ind{ind} {}
