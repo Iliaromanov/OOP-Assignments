@@ -29,18 +29,18 @@ class TString {
 
     // Iterator - You may not modify the contents of this structure at all!
     class TStringIter {
-        TNode *p;
+        TNode *p; // some private field to keep track of where the iterator is currently pointing to
         int ind;
-        TStringIter(TNode *, int);
+        TStringIter(TNode *, int); // private constructor
       public:
-        char &operator*();
-        TStringIter &operator++();
-        bool operator!=(const TStringIter &);
+        char &operator*(); // accesses the item the iterator is currently pointing to
+        TStringIter &operator++(); // advances the iterator to the next item and returns the iterator
+        bool operator!=(const TStringIter &); // returns true if both Iterators are different (do not point to the same item)
         friend class TString;
     };
 
-    TStringIter begin();
-    TStringIter end();
+    TStringIter begin(); // returns an Iterator pointing to the first element
+    TStringIter end(); // returns an Iterator pointing past the last element (not to the last element itself, but after it)
   private:
       // Node class for representing nodes in the tree
     struct TNode {
@@ -60,7 +60,14 @@ class TString {
         // Finds first parent that has the current node in its left sub-tree
         TNode *firstLeftParent();
         // increases all parents size values by amount
-        void updateSizes(int left_size); 
+        void updateSizes(int left_size);
+        // gets the right most child of the tree
+        TNode *RmAndReturnRightmostChild();
+        char &operator[] (const int index);
+        // returns the leftmost node
+        TNode *leftmostNode();
+        // returns the rightmost node
+        TNode *rightmostNode();
 
         // End TNode, changes from the above comment must stop here.
     };
