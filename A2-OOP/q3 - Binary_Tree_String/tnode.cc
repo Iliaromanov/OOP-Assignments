@@ -108,7 +108,8 @@ void TString::TNode::NodeInsert(const std::string &s, const int i) {
 
 TString::TNode *TString::TNode::RmAndReturnRightmostChild() {
     if (!right) {
-        if (parent) parent->right = nullptr; // remove it from tree, if its not the root node
+        // Make the rightmost node's left child the rightmost node parent's new right child
+        if (parent) parent->right = left;
         return this;
     } else {
         return right->RmAndReturnRightmostChild();
