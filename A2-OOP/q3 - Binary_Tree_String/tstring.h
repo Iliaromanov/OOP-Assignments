@@ -25,22 +25,22 @@ class TString {
     // Insert the string denoted by the std::string into this TString at the
     // location immediately at index.
     // Requires index <= size of string represented by our TString.
-    void insert(const std::string &s, const int index);
+    void insert(const std::string &, const int index);
 
     // Iterator - You may not modify the contents of this structure at all!
     class TStringIter {
-        TNode *p; // some private field to keep track of where the iterator is currently pointing to
+        TNode *p;
         int ind;
-        TStringIter(TNode *, int); // private constructor
+        TStringIter(TNode *, int);
       public:
-        char &operator*(); // accesses the item the iterator is currently pointing to
-        TStringIter &operator++(); // advances the iterator to the next item and returns the iterator
-        bool operator!=(const TStringIter &); // returns true if both Iterators are different (do not point to the same item)
+        char &operator*();
+        TStringIter &operator++();
+        bool operator!=(const TStringIter &);
         friend class TString;
     };
 
-    TStringIter begin(); // returns an Iterator pointing to the first element
-    TStringIter end(); // returns an Iterator pointing past the last element (not to the last element itself, but after it)
+    TStringIter begin();
+    TStringIter end();
   private:
       // Node class for representing nodes in the tree
     struct TNode {
@@ -61,13 +61,15 @@ class TString {
         TNode *firstLeftParent();
         // increases all parents size values by amount
         void updateSizes(int left_size);
-        // gets the right most child of the tree
+        // gets the right most child of the tree and removes it from that tree
         TNode *RmAndReturnRightmostChild();
         char &operator[] (const int index);
         // returns the leftmost node
         TNode *leftmostNode();
         // returns the rightmost node
         TNode *rightmostNode();
+        // Returns the sum of the sizes of the right nodes
+        int sumRightNodes();
 
         // End TNode, changes from the above comment must stop here.
     };
@@ -79,7 +81,6 @@ class TString {
     // Print the string represented by our TString.
     friend std::ostream& operator<<(std::ostream &, const TString &);
     // You may add any fields/methods below here for your own use.
-    // Print TNode
     friend std::ostream& operator<<(std::ostream &, const TString::TNode &);
 };
 #endif
