@@ -8,26 +8,26 @@ int main() {
     int readIn;
 
     while (1) {
+        // Read command and value from stdin
+        cin >> cmd;
         // check for eof
         if (cin.eof()) break;
 
-        // Read command and value from stdin
-        cin >> cmd;
+        // n command
+        if (cmd == 'n') {
+            seq.updateAndPrintX();
+            continue; // no need to read in an int
+        }
         cin >> readIn;
 
-        // update the seq struct based on cmd
-        switch (cmd) {
-            case 's': // if s, then clear the vector and add the s as only func
-                seq.x = readIn;
-                seq.funcSequence.clear();
-                seq.funcSequence.emplace_back('s', readIn);
-                break;
-            case 'n': // call the updateAndPrintX() method
-                seq.updateAndPrintX();
-                break;
-            default: // Otherwise append cmd to the seq's function sequence
-                seq.funcSequence.emplace_back(cmd, readIn);
-                break;
+        // if s, then clear the vector and add the s as only func in func sequence
+        if (cmd == 's') { 
+            seq.x = readIn;
+            seq.funcSequence.clear();
+            seq.funcSequence.emplace_back('s', readIn);
+        // Otherwise append cmd to the seq's function sequence
+        } else {
+            seq.funcSequence.emplace_back(cmd, readIn);
         }
     }
 }
