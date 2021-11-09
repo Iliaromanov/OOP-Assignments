@@ -7,7 +7,7 @@ class Decorator: public AsciiArt {
     protected:
         AsciiArt *component;
     public:
-        Decorator(AsciiArt *component) : component{component} {}
+        Decorator(AsciiArt *component);
         virtual char charAt(int row, int col, int tick) = 0;
         virtual ~Decorator();
 }; 
