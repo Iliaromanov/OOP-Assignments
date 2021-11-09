@@ -11,8 +11,8 @@ char Maskbox::charAt(int row, int col, int tick) {
         && component->charAt(row, col, tick) != ' ') {
         return what;
     }
-    // otherwise there are no boxes under this box and can just return ' '
-    return ' ';
+    // otherwise display other boxes below
+    return component->charAt(row, col, tick);
 }
 
 Maskbox::~Maskbox() {}
