@@ -9,10 +9,18 @@ char Movingbox::charAt(int row, int col, int tick) {
     int deltaY = 0;
     int deltaX = 0;
     switch (dir) {
-        case 'l': deltaX = -1 * tick;
-        case 'r': deltaX = 1 * tick;
-        case 'd': deltaY = 1 * tick;
-        case 'u': deltaY = -1 * tick;
+        case 'l':
+            deltaX = -1 * tick;
+            break;
+        case 'r': 
+            deltaX = 1 * tick;
+            break;
+        case 'd':
+            deltaY = 1 * tick;
+            break;
+        case 'u':
+            deltaY = -1 * tick;
+            break;
     }
 
     // if the location considering shift is within the boxes bounds, 
