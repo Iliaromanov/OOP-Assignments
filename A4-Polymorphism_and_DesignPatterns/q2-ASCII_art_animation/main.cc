@@ -2,6 +2,10 @@
 #include "asciiart.h"
 #include "blank.h"
 #include "studio.h"
+#include "filledbox.h"
+#include "blinkingbox.h"
+#include "movingbox.h"
+#include "maskbox.h"
 
 int main () {
   AsciiArt *canvas = new Blank;
@@ -26,25 +30,25 @@ int main () {
       int top, bottom, left, right;
       char what;
       std::cin >> top >> bottom >> left >> right >> what;
-
+      canvas = new Filledbox{top, bottom, left, right, what, canvas};
     }
     else if (command == "blinkingbox") {
       int top, bottom, left, right;
       char what;
       std::cin >> top >> bottom >> left >> right >> what;
-
+      canvas = new Blinkingbox{top, bottom, left, right, what, canvas};
     }
     else if (command == "movingbox") {
       int top, bottom, left, right;
       char what, dir;
       std::cin >> top >> bottom >> left >> right >> what >> dir;
-
+      canvas = new Movingbox{top, bottom, left, right, what, dir, canvas};
     }
     else if (command == "maskbox") {
       int top, bottom, left, right;
       char what;
       std::cin >> top >> bottom >> left >> right >> what;
-
+      canvas = new Maskbox{top, bottom, left, right, what, canvas};
     }
   }
 }
