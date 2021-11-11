@@ -4,10 +4,7 @@ using namespace std;
 
 TextObserver::TextObserver(
     Studio *canvas, int top, int bottom, int left, int right)
-    : subject{canvas}, top{top}, bottom{bottom}, left{left}, right{right} 
-{
-        // subject->attach(this);
-}
+    : subject{canvas}, top{top}, bottom{bottom}, left{left}, right{right} {}
 
 TextObserver::~TextObserver() {
     subject->detach(this);
