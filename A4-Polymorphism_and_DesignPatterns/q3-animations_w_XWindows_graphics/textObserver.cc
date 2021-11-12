@@ -2,11 +2,14 @@
 #include "textObserver.h"
 using namespace std;
 
-TextObserver::TextObserver(
+TextObserver::TextObserver( // constructor
     Studio *canvas, int top, int bottom, int left, int right)
-    : subject{canvas}, top{top}, bottom{bottom}, left{left}, right{right} {}
+    : subject{canvas}, top{top}, bottom{bottom}, left{left}, right{right} 
+{
+    subject->attach(this);
+}
 
-TextObserver::~TextObserver() {
+TextObserver::~TextObserver() { // destructor
     subject->detach(this);
 }
 
