@@ -7,6 +7,7 @@
 #include "movingbox.h"
 #include "maskbox.h"
 #include "textObserver.h"
+#include "graphicalObserver.h"
 #include <vector>
 #include <memory>
 
@@ -14,6 +15,8 @@ int main () {
   AsciiArt *canvas = new Blank;
 
   Studio s{canvas};
+
+  std::vector<Observer *> observers; // to keep track of observers and delete them at the end
 
   std::string command;
 
@@ -56,14 +59,21 @@ int main () {
     else if (command == "addtext") {
       int top, bottom, left, right;
       std::cin >> top >> bottom >> left >> right;
-      s.attach(new TextObserver{&s, top, bottom, left, right});
+      TextObserver *t = new TextObserver{&s, top, bottom, left, right};
+      observers.push_back(t);
     }
     else if (command == "addgraphics") {
       int top, bottom, left, right;
       std::cin >> top >> bottom >> left >> right;
 
-      ///s.attach() // make a ConcreteObserver class for graphics?
-
+      GraphicalObserver *g = new GraphicalObserver{
+        &s, new Xwindow{10*(right - left + 1), 10*(bottom - top + 1)}, 
+        top, bottom, left, right
+      };
+      observers.push_back(g);
     }
+  }
+  for (auto b : observers) { // delete all observers
+    delete b;
   }
 }
