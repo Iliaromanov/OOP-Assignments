@@ -4,7 +4,10 @@ using namespace std;
 
 GraphicalObserver::GraphicalObserver( //ctor
     Studio *canvas, Xwindow *window, int top, int bottom, int left, int right)
-    : subject{canvas}, window{window}, top{top}, bottom{bottom}, left{left}, right{right} {}
+    : subject{canvas}, window{window}, top{top}, bottom{bottom}, left{left}, right{right}
+{
+    subject->attach(this);
+}
 
 GraphicalObserver::~GraphicalObserver() { //destructor
     delete window;
