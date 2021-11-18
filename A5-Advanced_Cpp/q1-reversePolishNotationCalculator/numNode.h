@@ -6,6 +6,7 @@
 class NumNode : public ExpressionNode { // Concrete element
     int num;
     public:
+        int getNum();
         virtual std::string accept(ExpressionVisitor &v) override;
 };
 
