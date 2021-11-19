@@ -5,6 +5,7 @@
 #include "multNode.h"
 #include "divNode.h"
 #include "numNode.h"
+#include <string>
 
 class ExpressionVisitor { // Visitor abstract base class
     public:
@@ -13,6 +14,7 @@ class ExpressionVisitor { // Visitor abstract base class
         virtual std::string visit(MultNode *node) = 0;
         virtual std::string visit(DivNode *node) = 0;
         virtual std::string visit(NumNode *node) = 0;
+        ~ExpressionVisitor();
 };
 
 #endif
