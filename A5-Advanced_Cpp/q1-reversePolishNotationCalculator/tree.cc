@@ -1,4 +1,9 @@
 #include "tree.h"
+#include "plusNode.h"
+#include "minusNode.h"
+#include "multNode.h"
+#include "divNode.h"
+#include "numNode.h"
 using namespace std;
 
 Tree::Tree(std::istringstream &expression_ss, string root_val) { // ctor that builds tree from ss
@@ -12,7 +17,7 @@ Tree::Tree(std::istringstream &expression_ss, string root_val) { // ctor that bu
     } else if (root_val == "/") {
         root = make_unique<DivNode>(expression_ss);
     } else { // NumNode otherwise
-        root = make_unique<NumNode>(stoi(root_val));
+        root = make_unique<NumNode>(root_val);
     }
 }
 Tree::~Tree() {}
