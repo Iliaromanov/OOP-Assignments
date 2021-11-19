@@ -29,7 +29,8 @@ int main() {
         // visit the tree with both visitors
         ExpressionNode *root = expresison_tree.getRoot();
         string result = root->accept(calculator);
-        string infix_notation = root->accept(parser);
-        cout << infix_notation << " = " << result << endl;
+        cout << result << endl;
+        // string infix_notation = root->accept(parser);
+        // cout << infix_notation << " = " << result << endl;
     }
 }
