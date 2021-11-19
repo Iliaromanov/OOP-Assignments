@@ -2,7 +2,8 @@
 #include "expressionVisitor.h"
 using namespace std;
 
-MinusNode::MinusNode(std::istringstream &expression_ss) : ExpressionNode{expression_ss} {} // ctor
+MinusNode::MinusNode(unique_ptr<ExpressionNode> left, unique_ptr<ExpressionNode> right) 
+    : ExpressionNode{move(left), move(right)} {}
 
 std::string MinusNode::accept(ExpressionVisitor &v) {
     return v.visit(this);

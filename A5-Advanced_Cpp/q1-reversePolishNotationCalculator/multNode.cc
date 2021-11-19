@@ -2,7 +2,8 @@
 #include "expressionVisitor.h"
 using namespace std;
 
-MultNode::MultNode(std::istringstream &expression_ss) : ExpressionNode{expression_ss} {} // ctor
+MultNode::MultNode(unique_ptr<ExpressionNode> left, unique_ptr<ExpressionNode> right) 
+    : ExpressionNode{move(left), move(right)} {}
 
 std::string MultNode::accept(ExpressionVisitor &v) {
     return v.visit(this);
