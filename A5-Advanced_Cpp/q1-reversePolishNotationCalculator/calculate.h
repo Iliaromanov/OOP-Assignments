@@ -1,18 +1,15 @@
 #ifndef CALC_H
 #define CALC_H
-#include "plusNode.h"
-#include "minusNode.h"
-#include "multNode.h"
-#include "divNode.h"
-#include "numNode.h"
+#include "expressionVisitor.h"
 
 class Calculate : public ExpressionVisitor { // Concrete visitor
     public:
-        std::string visit(PlusNode *node);
-        std::string visit(MinusNode *node);
-        std::string visit(MultNode *node);
-        std::string visit(DivNode *node);
-        std::string visit(NumNode *node);
+        std::string visit(PlusNode *node) override;
+        std::string visit(MinusNode *node) override;
+        std::string visit(MultNode *node) override;
+        std::string visit(DivNode *node) override;
+        std::string visit(NumNode *node) override;
+        ~Calculate();
 };
 
 #endif
