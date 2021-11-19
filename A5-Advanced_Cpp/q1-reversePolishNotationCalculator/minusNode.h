@@ -5,7 +5,8 @@
 
 class MinusNode : public ExpressionNode { // Concrete element
     public:
-        virtual std::string accept(ExpressionVisitor v);
+        virtual std::string accept(ExpressionVisitor &v) override;
+        MinusNode(std::istringstream &expression_ss);
 };
 
 #endif
