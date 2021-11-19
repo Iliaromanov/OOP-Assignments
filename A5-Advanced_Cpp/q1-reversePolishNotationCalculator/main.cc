@@ -10,17 +10,15 @@ using namespace std;
 int main() {
     string rev_polish_notation;
     while(getline(cin, rev_polish_notation)) {
-        // reverse the read line, then convert to string stream
-        reverse(rev_polish_notation.begin(), rev_polish_notation.end());
+        // convert to ss so it can be used recursively by BuildTree
         istringstream ss{rev_polish_notation};
 
-        // get root node value
-        string root_val;
-        ss >> root_val;
-        // string root_val = rev_polish_notation.substr(0, rev_polish_notation.find(' '));
+        // get first node value
+        string first_val;
+        ss >> first_val;
 
-        // call tree ctor
-        Tree expresison_tree{ss, root_val};
+        Tree expresison_tree{}; // intizlize tree to placeholder
+        expresison_tree.BuildTree(ss, first_val); // build the tree from ss
 
         // create visitor objects
         Calculate calculator;
@@ -29,8 +27,7 @@ int main() {
         // visit the tree with both visitors
         ExpressionNode *root = expresison_tree.getRoot();
         string result = root->accept(calculator);
-        cout << result << endl;
-        // string infix_notation = root->accept(parser);
-        // cout << infix_notation << " = " << result << endl;
+        string infix_notation = root->accept(parser);
+        cout << infix_notation << " = " << result << endl;
     }
 }
