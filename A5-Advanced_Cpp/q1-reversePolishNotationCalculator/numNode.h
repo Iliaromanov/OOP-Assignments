@@ -4,10 +4,11 @@
 #include "expressionNode.h"
 
 class NumNode : public ExpressionNode { // Concrete element
-    int num;
+    std::string num;
     public:
-        int getNum();
+        std::string getNum();
         virtual std::string accept(ExpressionVisitor &v) override;
+        NumNode(std::string num);
 };
 
 #endif
