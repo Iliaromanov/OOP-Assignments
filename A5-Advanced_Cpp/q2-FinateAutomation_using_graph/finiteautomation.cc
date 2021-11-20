@@ -70,6 +70,8 @@ vector<string> FiniteAutomaton::buildSubset(Node *start, int len, vector<string>
 
 FiniteAutomaton::Node::Node(int index) : index{index} {}
 
-void FiniteAutomaton::Node::addEdge(int to, char c) { edges[to] = c; }
+void FiniteAutomaton::Node::addEdge(int to, char c) { 
+    edges.push_back(pair<int, char>{to, c});
+}
 
 int FiniteAutomaton::Node::getIndex() { return index; }
