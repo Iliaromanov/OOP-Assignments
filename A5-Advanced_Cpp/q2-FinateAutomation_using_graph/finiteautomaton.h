@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <map>
+
 
 class FiniteAutomaton {
     public:
@@ -28,14 +28,12 @@ class FiniteAutomaton {
 
     class Node {
         int index;
-        std::map<int, char> edges;
+        // edges will be a vector of pair(to_index, edge_label)
+        std::vector<std::pair<int, char>> edges;
         public:
             Node(int index);
             int getIndex();
             void addEdge(int to, char c);
-            // edges will be a map with the (key, value) pairs
-            //  given by (to_index, edge_label)
-            
 
         friend class FiniteAutomaton;
     };
